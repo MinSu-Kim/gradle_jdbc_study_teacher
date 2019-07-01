@@ -1,10 +1,3 @@
-use ncs_erp;
-
-select user(), database();
-
-show tables;
-desc department;
-
 insert into department values 
 (1,'영업',8),(2,'기획',10),(3, '개발',9),(4,'총무',7);
 
