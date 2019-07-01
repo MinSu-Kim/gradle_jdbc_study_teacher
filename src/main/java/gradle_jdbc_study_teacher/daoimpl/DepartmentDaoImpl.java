@@ -25,7 +25,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
 			log.trace(pstmt);
-
 			while(rs.next()) {
 				lists.add(getDepartment(rs));
 			}
