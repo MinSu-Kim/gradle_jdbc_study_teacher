@@ -1,15 +1,16 @@
 package gradle_jdbc_study_teacher.dto;
 
-import java.util.Arrays;
+import java.util.Date;
 
 public class Employee {
 	private int empNo;
 	private String empName;
-	private String title;
+	private Title title;
 	private Employee manager;
 	private int salary;
+	private boolean isMale;
 	private Department dno;
-	private byte[] pic;
+	private Date hireDate;
 
 	public Employee() {
 		// TODO Auto-generated constructor stub
@@ -19,14 +20,16 @@ public class Employee {
 		this.empNo = empNo;
 	}
 
-	public Employee(int empNo, String empName, String title, Employee manager, int salary, Department dno, byte[] pic) {
+	public Employee(int empNo, String empName, Title title, Employee manager, int salary, boolean isMale,
+			Department dno, Date hireDate) {
 		this.empNo = empNo;
 		this.empName = empName;
 		this.title = title;
 		this.manager = manager;
 		this.salary = salary;
+		this.isMale = isMale;
 		this.dno = dno;
-		this.pic = pic;
+		this.hireDate = hireDate;
 	}
 
 	public int getEmpNo() {
@@ -45,11 +48,11 @@ public class Employee {
 		this.empName = empName;
 	}
 
-	public String getTitle() {
+	public Title getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(Title title) {
 		this.title = title;
 	}
 
@@ -69,6 +72,14 @@ public class Employee {
 		this.salary = salary;
 	}
 
+	public boolean isMale() {
+		return isMale;
+	}
+
+	public void setMale(boolean isMale) {
+		this.isMale = isMale;
+	}
+
 	public Department getDno() {
 		return dno;
 	}
@@ -77,18 +88,12 @@ public class Employee {
 		this.dno = dno;
 	}
 
-	public byte[] getPic() {
-		return pic;
+	public Date getHireDate() {
+		return hireDate;
 	}
 
-	public void setPic(byte[] pic) {
-		this.pic = pic;
-	}
-
-	@Override
-	public String toString() {
-		return String.format("Employee [empNo=%s, empName=%s, title=%s, manager=%s, salary=%s, dno=%s, pic=%s]", empNo,
-				empName, title, manager, salary, dno, Arrays.toString(pic));
+	public void setHireDate(Date hireDate) {
+		this.hireDate = hireDate;
 	}
 
 	@Override
@@ -111,6 +116,14 @@ public class Employee {
 		if (empNo != other.empNo)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"Employee [empNo=%s, empName=%s, title=%s, manager=%s, salary=%s, isMale=%s, dno=%s, hireDate=%s]",
+				empNo, empName, title.getTitleNo(), manager.getEmpNo(), salary, isMale ? "남자" : "여자", dno.getDeptNo(),
+				hireDate);
 	}
 
 }

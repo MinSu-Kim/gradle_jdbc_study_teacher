@@ -2,4 +2,6 @@ select * from employee;
 select * from title;
 select * from department;
 
-desc employee;
+
+select empno, empname, title, manager, salary, gender, dno, hire_date from employee;
+
