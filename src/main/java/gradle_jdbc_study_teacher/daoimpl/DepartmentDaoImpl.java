@@ -7,15 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import gradle_jdbc_study_teacher.dao.DepartmentDao;
 import gradle_jdbc_study_teacher.dto.Department;
 import gradle_jdbc_study_teacher.jdbc.ConnectionProvider;
+import gradle_jdbc_study_teacher.jdbc.LogUtil;
 
 public class DepartmentDaoImpl implements DepartmentDao {
-	static final Logger log = LogManager.getLogger();
 	
 	@Override
 	public List<Department> selectDepartmentByAll() {
@@ -24,7 +21,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 		try(Connection conn = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
-			log.trace(pstmt);
+			LogUtil.prnLog(pstmt);
 			while(rs.next()) {
 				lists.add(getDepartment(rs));
 			}

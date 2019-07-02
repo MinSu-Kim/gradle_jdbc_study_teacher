@@ -14,10 +14,10 @@ import org.junit.runners.MethodSorters;
 import gradle_jdbc_study_teacher.dao.DepartmentDao;
 import gradle_jdbc_study_teacher.daoimpl.DepartmentDaoImpl;
 import gradle_jdbc_study_teacher.dto.Department;
+import gradle_jdbc_study_teacher.jdbc.LogUtil;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DepartmentDaoTest {
-	static final Logger log = LogManager.getLogger();
 	static DepartmentDao dao;
 	
 	@BeforeClass
@@ -34,7 +34,7 @@ public class DepartmentDaoTest {
 	public void test01SelectDepartmentByAll() {
 		List<Department> lists = dao.selectDepartmentByAll();
 		for(Department d : lists) {
-			log.trace(d);
+			LogUtil.prnLog(d);
 		}
 		Assert.assertNotEquals(0, lists.size());
 	}
