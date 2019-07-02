@@ -70,4 +70,7 @@ public class Department {
 		return true;
 	}
 
+	public Object[] toArray() {
+		return new Object[]{String.format("D%03d", deptNo), deptName, floor};
+	}
 }

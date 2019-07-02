@@ -65,6 +65,7 @@ public class EmployeeDaoTest {
 	
 	@Test
 	public void test05DeleteEmployee() throws SQLException {
+		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
 		Employee newEmployee = new Employee(1004);
 		int res = dao.deleteEmployee(newEmployee);
 		Assert.assertNotEquals(-1, res);

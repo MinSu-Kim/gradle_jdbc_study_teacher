@@ -23,7 +23,7 @@ public class DepartmentDaoTest {
 	public static void setUpBeforeClass() throws Exception {
 		dao = new DepartmentDaoImpl();
 	}
-
+	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 		dao = null;
@@ -67,13 +67,3 @@ public class DepartmentDaoTest {
 		Assert.assertNotEquals(-1, res);
 	}
 }
-
-
-
-
-
-
-
-
-
-

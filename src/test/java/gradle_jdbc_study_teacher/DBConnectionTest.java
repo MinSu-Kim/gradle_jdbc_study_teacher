@@ -10,7 +10,7 @@ import gradle_jdbc_study_teacher.jdbc.ConnectionProvider;
 import gradle_jdbc_study_teacher.jdbc.LogUtil;
 
 public class DBConnectionTest {
-
+	
 	@Test
 	public void testConnection() {
 		try {
