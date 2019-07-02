@@ -1,9 +1,8 @@
 package gradle_jdbc_study_teacher;
 
+import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -39,6 +38,34 @@ public class DepartmentDaoTest {
 		Assert.assertNotEquals(0, lists.size());
 	}
 
+	@Test
+	public void test02SelectDepartmentByNo() {
+		Department searchDept = dao.selectDepartmentByNo(new Department(1));
+		LogUtil.prnLog(searchDept);
+		Assert.assertNotNull(searchDept);
+	}
+	
+	@Test
+	public void test03InsertDepartment() {
+		Department newDept = new Department(5, "마케팅", 40);
+		int res = dao.insertDepartment(newDept);
+		Assert.assertNotEquals(-1, res);
+	}
+	
+	@Test
+	public void test04UpdateDepartment() throws SQLException {
+		Department newDept = new Department(5, "마케팅2", 60);
+		int res = dao.updateDepartment(newDept);
+		Assert.assertNotEquals(-1, res);
+	}
+	
+	
+	@Test
+	public void test05DeleteDepartment() throws SQLException {
+		Department newDept = new Department(5);
+		int res = dao.deleteDepartment(newDept);
+		Assert.assertNotEquals(-1, res);
+	}
 }
 
 

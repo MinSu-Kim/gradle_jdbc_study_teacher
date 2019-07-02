@@ -26,7 +26,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 				lists.add(getDepartment(rs));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LogUtil.prnLog(e);
 		} 
 		return lists;
 	}
@@ -38,27 +38,74 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	}
 	
 	@Override
-	public Department selectDepartmentByNo(Department dept) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public Department selectDepartmentByNo(Department dept) {
+		Department searchDept = null;
+		String sql = "select deptno, deptname, floor from department where deptno = ?";
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, dept.getDeptNo());
+			LogUtil.prnLog(pstmt);
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					searchDept = getDepartment(rs);
+				}
+			}
+		} catch (SQLException e) {
+			LogUtil.prnLog(e);
+		} 
+		return searchDept;
 	}
 
 	@Override
-	public int insertDepartment(Department dept) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertDepartment(Department dept) {
+		String sql = "insert into department(deptno, deptname, floor) values(?, ?, ?)";
+		int res = -1;
+		
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setInt(1, dept.getDeptNo());
+			pstmt.setString(2, dept.getDeptName());
+			pstmt.setInt(3, dept.getFloor());
+			LogUtil.prnLog(pstmt);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			LogUtil.prnLog(e);
+		}
+		return res;
 	}
 
 	@Override
-	public int deleteDepartment(Department dept) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteDepartment(Department dept) {
+		String sql = "delete from department where deptno=?";
+		int res = -1;
+		
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setInt(1, dept.getDeptNo());
+			LogUtil.prnLog(pstmt);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			LogUtil.prnLog(e);
+		}
+		return res;
 	}
 
 	@Override
-	public int updateDepartment(Department dept) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateDepartment(Department dept) {
+		String sql = "update department set deptname=?, floor=? where deptno=?;";
+		int res = -1;
+		
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, dept.getDeptName());
+			pstmt.setInt(2, dept.getFloor());
+			pstmt.setInt(3, dept.getDeptNo());
+			LogUtil.prnLog(pstmt);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			LogUtil.prnLog(e);
+		}
+		return res;
 	}
 
 }
