@@ -21,12 +21,14 @@ ALTER TABLE ncs_erp.department
 
 -- 사원
 CREATE TABLE ncs_erp.employee (
-	empno   INT(11)     NOT NULL COMMENT '사원번호', -- 사원번호
-	empname VARCHAR(20) NOT NULL COMMENT '사원명', -- 사원명
-	title   INT(11)     NULL     COMMENT '직책', -- 직책
-	manager INT(11)     NULL     COMMENT '직속상사', -- 직속상사
-	salary  INT(11)     NULL     COMMENT '급여', -- 급여
-	dno     INT(11)     NULL     COMMENT '부서' -- 부서
+	empno     INT(11)     NOT NULL COMMENT '사원번호', -- 사원번호
+	empname   VARCHAR(20) NOT NULL COMMENT '사원명', -- 사원명
+	title     INT(11)     NULL     COMMENT '직책', -- 직책
+	manager   INT(11)     NULL     COMMENT '직속상사', -- 직속상사
+	salary    INT(11)     NULL     COMMENT '급여', -- 급여
+	gender    TINYINT(1)  NULL     COMMENT '성별', -- 성별
+	dno       INT(11)     NULL     COMMENT '부서', -- 부서
+	hire_date DATE        NULL     COMMENT '입사일' -- 입사일
 )
 COMMENT '사원';
 
