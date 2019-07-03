@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import gradle_jdbc_study_teacher.ui.DepartmentFrameUI;
+import gradle_jdbc_study_teacher.ui.TitleFrameUI;
 
 @SuppressWarnings("serial")
 public class ErpApplication extends JFrame implements ActionListener {
@@ -51,15 +52,17 @@ public class ErpApplication extends JFrame implements ActionListener {
 			actionPerformedBtnDept(e);
 		}
 		if (e.getSource() == btnEmp) {
-			actionPerformedBtnNewButton(e);
+			actionPerformedBtnEmp(e);
 		}
 	}
-	protected void actionPerformedBtnNewButton(ActionEvent e) {
+	protected void actionPerformedBtnEmp(ActionEvent e) {
 	}
 	protected void actionPerformedBtnDept(ActionEvent e) {
 		DepartmentFrameUI frame = new DepartmentFrameUI();
 		frame.setVisible(true);
 	}
 	protected void actionPerformedBtnTitle(ActionEvent e) {
+		TitleFrameUI frame = new TitleFrameUI();
+		frame.setVisible(true);
 	}
 }

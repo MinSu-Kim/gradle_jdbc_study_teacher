@@ -56,4 +56,7 @@ public class Title {
 		return String.format("Title [titleNo=%s, titleName=%s]", titleNo, titleName);
 	}
 
+	public Object[] toArray() {
+		return new Object[]{String.format("T%03d", titleNo), titleName};
+	}
 }

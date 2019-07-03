@@ -64,8 +64,11 @@ public abstract class AbstractFrameUI<T> extends JFrame implements ActionListene
 		addPopupMenu();
 	}
 
-	protected abstract void getContentPanel();
-	protected abstract void getListPanel();
+	protected void refreshList() {
+		reloadItemList();
+		pList.setItemList(itemLists);
+		pList.reloadData();
+	}
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -107,11 +110,18 @@ public abstract class AbstractFrameUI<T> extends JFrame implements ActionListene
 		}
 	};
 	
+	protected void actionPerformedBtnCancel() {
+		pContent.clearComponent(getNextNo());	
+	}
+	
+	protected abstract void getContentPanel();
+	protected abstract void getListPanel();
+
 	protected abstract int getNextNo();
 	protected abstract void reloadItemList();
 	protected abstract void actionContentUpdateUI();
 	protected abstract void actionPerformedBtnUpdate();
 	protected abstract void actionPerformedBtnAdd();
-	protected abstract void actionPerformedBtnCancel();
+
 	protected abstract void actionPerformedBtnDelete();
 }

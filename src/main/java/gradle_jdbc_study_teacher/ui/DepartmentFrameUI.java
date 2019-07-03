@@ -31,7 +31,7 @@ public class DepartmentFrameUI extends AbstractFrameUI<Department> {
 		pContent = new PanelDepartment();
 		
 		int nextDeptNo = getNextNo();
-		pContent.getTfNo().setText(String.format("D%03d", nextDeptNo+1));
+		pContent.getTfNo().setText(String.format("D%03d", nextDeptNo));
 		pContent.getTfNo().setEditable(false);
 	}
 
@@ -84,20 +84,9 @@ public class DepartmentFrameUI extends AbstractFrameUI<Department> {
 			JOptionPane.showMessageDialog(null, dept + "추가 실패");
 			return;
 		}
-		JOptionPane.showMessageDialog(null, dept + "추가 되었습니다.ㅇ");
+		JOptionPane.showMessageDialog(null, dept.getDeptName() + "추가 되었습니다.");
 		refreshList();
 		pContent.clearComponent(getNextNo());
-	}
-
-	@Override
-	protected void actionPerformedBtnCancel() {
-		pContent.clearComponent(getNextNo());
-	}
-
-	private void refreshList() {
-		reloadItemList();
-		pList.setItemList(itemLists);
-		pList.reloadData();
 	}
 
 	@Override
