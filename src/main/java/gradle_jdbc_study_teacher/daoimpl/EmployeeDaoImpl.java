@@ -19,7 +19,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public List<Employee> selectEmployeeByAll() {
 		List<Employee> lists = new ArrayList<Employee>();
-		String sql = "select empno, empname, title, manager, salary, gender, dno, hire_date from employee;";
+		String sql = "select e.empno, e.empname, tno, tname, e.manager, m.empname as m_name, e.salary, e.gender, deptno, deptname, floor, e.hire_date "
+				+ "from employee e left join title t on e.title = t.tno "
+				+ "join department d on e.dno = d.deptno "
+				+ "join employee m on e.manager = m.empno;";
+		
 		try(Connection conn = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
@@ -34,16 +38,19 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	private Employee getEmployee(ResultSet rs) throws SQLException {
-		return new Employee(rs.getInt("empNo"), rs.getString("empName"), new Title(rs.getInt("title")), 
-				new Employee(rs.getInt("manager")), rs.getInt("salary"), rs.getBoolean("gender"), 
-				new Department(rs.getInt("dno")), 
+		return new Employee(rs.getInt("empNo"), rs.getString("empName"), new Title(rs.getInt("tno"), rs.getString("tname")), 
+				new Employee(rs.getInt("manager"), rs.getString("m_name")), rs.getInt("salary"), rs.getBoolean("gender"), 
+				new Department(rs.getInt("deptno"), rs.getString("deptname"), rs.getInt("floor")), 
 				rs.getDate("hire_date"));
 	}
 
 	@Override
 	public Employee selectEmployeeByNo(Employee employee) {
 		Employee searchEmployee = null;
-		String sql = "select empno, empname, title, manager, salary, gender, dno, hire_date from employee where empno = ?";
+		String sql = "select e.empno, e.empname, tno, tname, e.manager, m.empname as m_name, e.salary, e.gender, deptno, deptname, floor, e.hire_date "
+				+ "from employee e left join title t on e.title = t.tno "
+				+ "join department d on e.dno = d.deptno "
+				+ "join employee m on e.manager = m.empno where e.empno = ?";
 		try(Connection conn = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, employee.getEmpNo());

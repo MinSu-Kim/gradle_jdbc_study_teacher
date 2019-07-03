@@ -20,6 +20,11 @@ public class Employee {
 		this.empNo = empNo;
 	}
 
+	public Employee(int empNo, String empName) {
+		this.empNo = empNo;
+		this.empName = empName;
+	}
+
 	public Employee(int empNo, String empName, Title title, Employee manager, int salary, boolean isMale,
 			Department dno, Date hireDate) {
 		this.empNo = empNo;
@@ -126,4 +131,15 @@ public class Employee {
 				hireDate);
 	}
 
+	public Object[] toArray() {
+		return new Object[] { 
+				String.format("E%s%03d", hireDate.toString().substring(1, 4), empNo), 
+				empName,
+				title.getTitleName(), 
+				String.format("%s(%s)", manager.getEmpName(), manager.getEmpNo()),
+				String.format("%,d", salary), 
+				isMale ? "남자" : "여자",
+				String.format("%s(%s층)", dno.getDeptName(), dno.getFloor()), 
+				String.format("%tF", hireDate) };
+	}
 }
