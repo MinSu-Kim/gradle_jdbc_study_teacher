@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 public abstract class AbstractPanelContent<T> extends JPanel {
 	public abstract void setItem(T dept);
 	public abstract T getItem();
-	public abstract void clearComponent();
+	public abstract void clearComponent(int nextNo);
 	public abstract JTextField getTfNo();
 	public abstract void setComponentAllEditable(boolean isEditable);
 }

@@ -3,10 +3,13 @@ package gradle_jdbc_study_teacher.ui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 
 import gradle_jdbc_study_teacher.ui.content.AbstractPanelContent;
@@ -19,6 +22,8 @@ public abstract class AbstractFrameUI<T> extends JFrame implements ActionListene
 	private JPanel pMain;
 	protected AbstractPanelContent<T> pContent;
 	protected AbstractListPanel<T> pList;
+	protected List<T> itemLists;
+	
 	protected JButton btnAdd;
 	private JButton btnCancel;
 
@@ -27,7 +32,7 @@ public abstract class AbstractFrameUI<T> extends JFrame implements ActionListene
 	}
 	
 	private void initComponents() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -56,6 +61,7 @@ public abstract class AbstractFrameUI<T> extends JFrame implements ActionListene
 		
 		pMain.add(this.pContent, BorderLayout.CENTER);
 		contentPane.add(this.pList, BorderLayout.SOUTH);
+		addPopupMenu();
 	}
 
 	protected abstract void getContentPanel();
@@ -63,20 +69,49 @@ public abstract class AbstractFrameUI<T> extends JFrame implements ActionListene
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
-			actionPerformedBtnCancel(e);
+			actionPerformedBtnCancel();
 		}
 		if (e.getSource() == btnAdd) {
 			if (e.getActionCommand().equals("추가")) {
-				actionPerformedBtnAdd(e);
+				actionPerformedBtnAdd();
 			}
 			if (e.getActionCommand().equals("수정")) {
-				actionPerformedBtnUpdate(e);
+				actionPerformedBtnUpdate();
 			}
 		}
 	}
 	
+	private void addPopupMenu() {
+		JPopupMenu popupMenu = new JPopupMenu();
 
-	protected abstract void actionPerformedBtnUpdate(ActionEvent e);
-	protected abstract void actionPerformedBtnAdd(ActionEvent e);
-	protected abstract void actionPerformedBtnCancel(ActionEvent e);
+		JMenuItem mntmPopUpdate = new JMenuItem("수정");
+		mntmPopUpdate.addActionListener(popupListener);
+		popupMenu.add(mntmPopUpdate);
+
+		JMenuItem mntmPopDelete = new JMenuItem("삭제");
+		mntmPopDelete.addActionListener(popupListener);
+		popupMenu.add(mntmPopDelete);
+
+		pList.setPopupMenu(popupMenu);
+	}
+
+	ActionListener popupListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getActionCommand().equals("수정")) {
+				actionContentUpdateUI();
+			}
+			if (e.getActionCommand().equals("삭제")) {
+				actionPerformedBtnDelete();
+			}
+		}
+	};
+	
+	protected abstract int getNextNo();
+	protected abstract void reloadItemList();
+	protected abstract void actionContentUpdateUI();
+	protected abstract void actionPerformedBtnUpdate();
+	protected abstract void actionPerformedBtnAdd();
+	protected abstract void actionPerformedBtnCancel();
+	protected abstract void actionPerformedBtnDelete();
 }

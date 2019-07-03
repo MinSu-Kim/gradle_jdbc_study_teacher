@@ -60,27 +60,28 @@ public class PanelDepartment extends AbstractPanelContent<Department>{
 	
 	@Override
 	public void setItem(Department dept) {
-		tfDeptNo.setText(dept.getDeptNo()+"");
+		tfDeptNo.setText(String.format("D%03d", dept.getDeptNo()));
 		tfDeptName.setText(dept.getDeptName());
 		tfFloor.setText(String.valueOf(dept.getFloor()));		
 	}
 	
 	@Override
 	public Department getItem() {
-		int deptNo = Integer.parseInt(tfDeptNo.getText().trim());
+		int deptNo = Integer.parseInt(tfDeptNo.getText().trim().substring(1));
 		String deptName = tfDeptName.getText().trim();
 		int floor = Integer.parseInt(tfFloor.getText().trim());
 		return new Department(deptNo, deptName, floor);
 	}
 	
 	@Override
-	public void clearComponent() {
-		tfDeptNo.setText("");
+	public void clearComponent(int nextNo) {
+		tfDeptNo.setText(String.format("D%03d", nextNo));
 		tfDeptName.setText("");
 		tfFloor.setText("");
-		if (!tfDeptNo.isEditable()) {
-			tfDeptNo.setEditable(true);
-		}		
+		tfDeptNo.setEditable(false);
+		/*
+		 * if (!tfDeptNo.isEditable()) { tfDeptNo.setEditable(true); }
+		 */	
 	}
 	
 	@Override

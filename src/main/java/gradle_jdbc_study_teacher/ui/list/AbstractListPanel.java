@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -95,4 +96,18 @@ public abstract class AbstractListPanel<T> extends JPanel {
 	}
 
 
+	public T getSelectedItem() {
+		int i = table.getSelectedRow();
+		T item = null;
+		if (table.getModel().getRowCount() == 0) { // 부서정보가 존재하지 않을 경우
+			return item;
+		}
+		if (i < 0 || i > table.getModel().getRowCount() - 1) { // 선택하지 않은 경우
+			JOptionPane.showMessageDialog(null, "선택된 부서가 없습니다.");
+			return item;
+		}
+
+		item = itemList.get(i);
+		return item;
+	}
 }
