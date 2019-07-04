@@ -1,10 +1,15 @@
 package gradle_jdbc_study_teacher.ui.content;
 
 import java.awt.GridLayout;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,7 +25,7 @@ import gradle_jdbc_study_teacher.dto.Employee;
 import gradle_jdbc_study_teacher.dto.Title;
 
 @SuppressWarnings("serial")
-public class PanelEmployee extends AbstractPanelContent<Employee> {
+public class PanelEmployee extends AbstractPanelContent<Employee>{
 	private JTextField tfEmpNo;
 	private JTextField tfEmpName;
 	private JLabel lblTitle;
@@ -38,6 +43,15 @@ public class PanelEmployee extends AbstractPanelContent<Employee> {
 	private JComboBox<Employee> cmbMgn;
 	private JLabel lblHireDate;
 	private JTextField tfHireDate;
+	
+	private List<Title> titleList;
+	private DefaultComboBoxModel<Title> titleModels;
+	
+	private List<Department> deptList;
+	private DefaultComboBoxModel<Department> deptModels;
+	
+	private List<Employee> mgnList;
+	private DefaultComboBoxModel<Employee> mgnModels;
 	
 	public PanelEmployee() {
 		initComponents();
@@ -87,6 +101,7 @@ public class PanelEmployee extends AbstractPanelContent<Employee> {
 		pGender.setLayout(new BoxLayout(pGender, BoxLayout.X_AXIS));
 		
 		rdbMale = new JRadioButton("남");
+		rdbMale.setSelected(true);
 		buttonGroup.add(rdbMale);
 		pGender.add(rdbMale);
 		
@@ -118,22 +133,79 @@ public class PanelEmployee extends AbstractPanelContent<Employee> {
 		add(tfHireDate);
 	}
 	
+	public void setTitles(List<Title> titleLists) {
+		this.titleList = titleLists;
+		this.titleModels = new DefaultComboBoxModel<Title>(new Vector<Title>(titleLists));
+		cmbTitle.setModel(titleModels);
+		cmbTitle.setSelectedIndex(-1);
+	}
+	
+	public void setDepartments(List<Department> deptLists) {
+		this.deptList = deptLists;
+		this.deptModels = new DefaultComboBoxModel<Department>(new Vector<Department>(deptLists));
+		cmbDept.setModel(deptModels);
+		cmbDept.setSelectedIndex(-1);
+	}
+	
+	public void setManagements(List<Employee> mgnLists) {
+		this.mgnList = mgnLists;
+		if (mgnModels != null) {
+			mgnModels.removeAllElements();
+		}
+		this.mgnModels = new DefaultComboBoxModel<Employee>(new Vector<Employee>(mgnLists));
+		cmbMgn.setModel(mgnModels);
+//		cmbMgn.setSelectedIndex(-1);
+	}
+	
+	
 	@Override
-	public void setItem(Employee dept) {
-		// TODO Auto-generated method stub
+	public void setItem(Employee emp) {
+		tfEmpNo.setText(String.format("E%06d", emp.getEmpNo()));
+		tfEmpName.setText(emp.getEmpName());
+		cmbTitle.setSelectedItem(emp.getTitle());
+		cmbDept.setSelectedItem(emp.getDno());
 		
+		cmbMgn.setSelectedItem(emp.getManager());
+		spinSalary.setValue(emp.getSalary());
+		if(emp.isMale()) {
+			rdbMale.setSelected(true);
+		}else {
+			rdbFeMale.setSelected(true);
+		}
+		
+		tfHireDate.setText(String.format("%tF", emp.getHireDate()));
 	}
 
 	@Override
 	public Employee getItem() {
-		// TODO Auto-generated method stub
-		return null;
+		int empNo = Integer.parseInt(tfEmpNo.getText().trim().substring(1));
+		String empName = tfEmpName.getText().trim();
+		Title title = (Title) cmbTitle.getSelectedItem();
+		Employee manager = (Employee) cmbMgn.getSelectedItem();
+		int salary = (Integer)spinSalary.getValue();
+		boolean isMale = rdbMale.isSelected()?true:false;
+		Department dno = (Department) cmbDept.getSelectedItem();
+		Date hireDate = null;
+		try {
+			hireDate = new SimpleDateFormat("yyyy-MM-dd").parse(tfHireDate.getText().trim());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return new Employee(empNo, empName, title, manager, salary, isMale, dno, hireDate);
 	}
 
 	@Override
 	public void clearComponent(int nextNo) {
-		// TODO Auto-generated method stub
-		
+		System.out.println(nextNo);
+		tfEmpNo.setText(String.format("E%6d", nextNo));
+		tfEmpName.setText("");
+		cmbTitle.setSelectedIndex(-1);;
+		spinSalary.setValue(new Integer(1500000));;
+		rdbMale.setSelected(true);
+		cmbDept.setSelectedIndex(-1);
+		mgnModels.removeAllElements();
+		cmbMgn.setSelectedIndex(-1);
+		tfHireDate.setText(String.format("%tF", new Date()));
 	}
 
 	@Override
@@ -145,6 +217,14 @@ public class PanelEmployee extends AbstractPanelContent<Employee> {
 	public void setComponentAllEditable(boolean isEditable) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public JComboBox<Department> getCmbDept() {
+		return cmbDept;
+	}
+
+	public JComboBox<Employee> getCmbMgn() {
+		return cmbMgn;
 	}
 
 }

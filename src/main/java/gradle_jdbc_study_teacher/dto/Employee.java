@@ -13,7 +13,6 @@ public class Employee {
 	private Date hireDate;
 
 	public Employee() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Employee(int empNo) {
@@ -125,6 +124,9 @@ public class Employee {
 
 	@Override
 	public String toString() {
+		if (title==null) {
+			return String.format("%s(%s)", empName, empNo);
+		}
 		return String.format(
 				"Employee [empNo=%s, empName=%s, title=%s, manager=%s, salary=%s, isMale=%s, dno=%s, hireDate=%s]",
 				empNo, empName, title.getTitleNo(), manager.getEmpNo(), salary, isMale ? "남자" : "여자", dno.getDeptNo(),
@@ -133,10 +135,10 @@ public class Employee {
 
 	public Object[] toArray() {
 		return new Object[] { 
-				String.format("E%s%03d", hireDate.toString().substring(1, 4), empNo), 
+				String.format("E%06d", empNo), 
 				empName,
 				title.getTitleName(), 
-				String.format("%s(%s)", manager.getEmpName(), manager.getEmpNo()),
+				manager.getEmpNo()==0?"":String.format("%s(%s)", manager.getEmpName(), manager.getEmpNo()),
 				String.format("%,d", salary), 
 				isMale ? "남자" : "여자",
 				String.format("%s(%s층)", dno.getDeptName(), dno.getFloor()), 
