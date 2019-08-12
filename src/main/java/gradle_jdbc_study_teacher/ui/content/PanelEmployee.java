@@ -89,7 +89,7 @@ public class PanelEmployee extends AbstractPanelContent<Employee>{
 		add(lblSalary);
 		
 		spinSalary = new JSpinner();
-		spinSalary.setModel(new SpinnerNumberModel(new Integer(1500000), null, null, new Integer(100000)));
+		spinSalary.setModel(new SpinnerNumberModel(1500000, null, null, 100000));
 		add(spinSalary);
 		
 		lblGender = new JLabel("성별");
@@ -200,7 +200,7 @@ public class PanelEmployee extends AbstractPanelContent<Employee>{
 		tfEmpNo.setText(String.format("E%6d", nextNo));
 		tfEmpName.setText("");
 		cmbTitle.setSelectedIndex(-1);;
-		spinSalary.setValue(new Integer(1500000));;
+		spinSalary.setValue(1500000);;
 		rdbMale.setSelected(true);
 		cmbDept.setSelectedIndex(-1);
 		mgnModels.removeAllElements();

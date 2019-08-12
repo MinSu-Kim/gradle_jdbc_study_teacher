@@ -1,7 +1,6 @@
 package gradle_jdbc_study_teacher;
 
 import java.awt.EventQueue;
-import java.util.Date;
 
 public class ErpMain {
 

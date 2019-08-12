@@ -27,7 +27,7 @@ public class MyDataSource {
 			DataSource ds_unpooled = DataSources.unpooledDataSource(prop.getProperty("url"), prop);
 			Map<String, Object> overrides = new HashMap<>();
 			overrides.put("maxStatements", "200");
-			overrides.put("maxPoolSize", new Integer(50));
+			overrides.put("maxPoolSize", 50);
 
 			dataSource = DataSources.pooledDataSource(ds_unpooled, overrides);
 		} catch (SQLException e) {
